@@ -10,7 +10,7 @@ namespace MTSTest
             TransformToElephant();
             Console.WriteLine("Муха");
             
-            //...
+            //some code ...
         }
 
         private static void TransformToElephant()

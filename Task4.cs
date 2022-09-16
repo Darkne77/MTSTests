@@ -25,25 +25,31 @@ namespace MTSTest
         /// <returns>Отсортированный по возрастанию поток чисел.</returns>
         static IEnumerable<int> Sort(IEnumerable<int> inputStream, int sortFactor, int maxValue)
         {
-            //TODO array -> use maxValue
-            var values = new SortedList<int, int>();
-            foreach (int x in inputStream)
+            var values = new int[maxValue + 1];
+            var min = 0;
+            foreach (var x in inputStream)
             {
-                //TODO use sortFactor
-                if (!values.TryAdd(x, 1))
+                values[x]++;
+
+                while (x - sortFactor > min)
                 {
-                    values[x]++;
+                    while (values[min] > 0)
+                    {
+                        values[min]--;
+                        yield return min;
+                    }
+                    min++;
                 }
             }
 
-            foreach (var element in values)
+            while (min < values.Length)
             {
-                int counter = 0;
-                while (element.Value - counter > 0)
+                while (values[min] > 0)
                 {
-                    yield return element.Key;
-                    counter++;
+                    values[min]--;
+                    yield return min;
                 }
+                min++;
             }
         }
 
